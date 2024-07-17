@@ -37,7 +37,7 @@ with open("dataset/sales_textbook.txt", "r") as f:
 # 语料token化
 encoding = tiktoken.get_encoding("cl100k_base")  # tokenizer模型
 token_text = encoding.encode(text)  # 编码
-max_token_value = max(token_text)  # 最大值
+max_token_value = max(token_text)+1  # 最大值
 tokenized_text = torch.tensor(token_text, dtype=torch.long, device=device)
 # 拆分训练集和测试集
 train_size = int(len(tokenized_text) * 0.9)
@@ -295,7 +295,7 @@ for step in range(max_iters):
     optimizer.step()
 
 # 存储模型
-torch.save(model, model.state_dict(), "model-ckpt.pt")
+torch.save(model.state_dict(), "model-ckpt.pt")
 
 # 文本生成
 model.eval()
